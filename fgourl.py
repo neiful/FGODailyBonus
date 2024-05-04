@@ -133,6 +133,11 @@ def PostReq(s, url, data):
         raise Exception(message)
     return res
 
+def getSignature(userId, idempotencyKey):
+    url = f'https://fgo.xiaoheimao.workers.dev/getSignature?userId={userId}&idempotencyKey={idempotencyKey}'
+    result = requests.get(url, verify=False).text
+    return result
+
 
 def gameData():
     global app_ver_, data_ver_, date_ver_
