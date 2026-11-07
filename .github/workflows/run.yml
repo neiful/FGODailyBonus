@@ -18,10 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        # 将失效的 3.8 升级为目前兼容性和性能极佳的 3.11
+        python-version: [3.11]
 
     steps:
-    - uses: actions/checkout@v2
+    # 升级到最新的 checkout v4 解决运行警告
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
     - name: Test
       run: |
         python3 main.py
