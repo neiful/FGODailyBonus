@@ -18,17 +18,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # 将失效的 3.8 升级为目前兼容性和性能极佳的 3.11
         python-version: [3.11]
 
     steps:
-    # 升级到最新的 checkout v4 解决运行警告
     - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+
+    # 补上安装依赖的步骤（根据项目里是否有 requirements.txt 自动选择安装）
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install requests
 
     - name: Test
       run: |
