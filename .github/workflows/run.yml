@@ -4,13 +4,9 @@
 name: Python package
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  schedule:
-    - cron: '01 19 * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-fgo-sign]
 
 jobs:
   build:
